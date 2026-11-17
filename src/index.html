@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reserva de Horas Médicas | Clínica Salud Express (demo)</title>
+  <link rel="stylesheet" href="styles.css">||
+</head>
+<body>
+  <header class="topbar">
+    <div class="container">
+      <h1>Clínica Salud Express</h1>
+      <p>Plataforma de reserva de horas médicas &middot; Proyecto Semana 3 DevOps</p>
+    </div>
+  </header>
+
+  <main class="container layout">
+    <section class="card" aria-labelledby="titulo-reserva">
+      <h2 id="titulo-reserva">Reservar hora médica</h2>
+      <p class="aviso">Formulario de inscripcion. Ingrese sus datos personales no almacena ni envía información.</p>
+
+      <form id="form-reserva" novalidate>
+        <label for="nombre">Nombre del paciente</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Ej: Paciente" required>
+
+        <label for="correo">Correo electronico</label>
+        <input type="email" id="correo" name="correo" placeholder="paciente@example.com" required>
+
+        <label for="especialidad">Especialidad</label>
+        <select id="especialidad" name="especialidad" required>
+          <option value="">Seleccione una opción</option>
+          <option>Medicina general</option>
+          <option>Pediatría</option>
+          <option>Cardiología</option>
+          <option>Dermatología</option>
+          <option>Ginecología</option>
+          <option>Dental</option>
+        </select>
+
+        <div class="fila">
+          <div>
+            <label for="fecha">Fecha</label>
+            <input type="date" id="fecha" name="fecha" required>
+          </div>
+          <div>
+            <label for="hora">Hora</label>
+            <select id="hora" name="hora" required>
+              <option value="">Seleccione</option>
+              <option>09:00</option><option>10:00</option><option>11:00</option>
+              <option>15:00</option><option>16:00</option><option>17:00</option>
+            </select>
+          </div>
+        </div>
+
+        <label for="motivo">Motivo de la consulta (opcional)</label>
+        <textarea id="motivo" name="motivo" rows="3" placeholder="Describa brevemente el motivo (sin datos sensibles)"></textarea>
+
+        <button type="submit">Solicitar hora</button>
+      </form>
+      <p id="mensaje" class="mensaje" role="status" aria-live="polite"></p>
+    </section>
+
+    <aside class="lateral">
+      <section class="card">
+        <h2>Datos de atención</h2>
+        <ul>
+          <li><strong>Horario:</strong> lunes a viernes, 08:00 a 18:00 h</li>
+          <li><strong>Sábados:</strong> 09:00 a 13:00 h</li>
+          <li><strong>Sede:</strong> Sucursal Copiapo (dirección Mall Plaza)</li>
+          <li><strong>Teléfono:</strong> +56 2 12345555</li>
+          <li><strong>Correo:</strong> contacto@clsaludexpress.com</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Estado del servicio</h2>
+        <p><span class="estado" aria-hidden="true"></span> <strong>Operativo</strong></p>
+        <ul>
+          <li>Versión: 1.0.0</li>
+          <li>Entorno: local (Docker Desktop)</li>
+          <li>Servidor: Nginx (nginx:alpine)</li>
+          <li>Puerto publicado: 8080</li>
+        </ul>
+      </section>
+    </aside>
+  </main>
+
+  <footer class="container pie">
+    <p>&copy; 2026 Clínica Salud Expresss &middot; IACC Semana 3 &middot; DevOps</p>
+  </footer>
+
+  <script>
+    // Simulación local: no se envía información a ningún servidor.
+    document.getElementById('form-reserva').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var f = e.target;
+      var msg = document.getElementById('mensaje');
+      if (!f.checkValidity()) {
+        msg.textContent = 'Complete los campos obligatorios para continuar.';
+        msg.className = 'mensaje error';
+        return;
+      }
+      msg.textContent = 'Solicitud registrada para ' + f.especialidad.value +
+        ' el ' + f.fecha.value + ' a las ' + f.hora.value + '. (Demostración: no se almacenó ningún dato).';
+      msg.className = 'mensaje ok';
+      f.reset();
+    });
+  </script>
+</body>
+</html>

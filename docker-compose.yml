@@ -1,0 +1,19 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: reserva-horas-web:1.0.0
+    container_name: reserva-horas-web
+    ports:
+      # Puerto del equipo : puerto del contenedor (8080 por defecto)
+      - "${APP_PORT:-8080}:80"
+    environment:
+      - TZ=${TZ:-America/Santiago}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
